@@ -1,0 +1,99 @@
+{
+    "$id": "docs/spec/metricsets/metricset.json",
+    "type": "object",
+    "description": "Data captured by an agent representing an event occurring in a monitored service",
+    "allOf": [
+        { "$ref": "../timestamp_epoch.json"},
+        { "$ref": "../span_type.json" },
+        { "$ref": "../span_subtype.json" },
+        { "$ref": "../transaction_name.json" },
+        { "$ref": "../transaction_type.json" },
+        {
+            "properties": {
+                "samples": {
+                    "type": [
+                        "object"
+                    ],
+                    "description": "Sampled application metrics collected from the agent.",
+                    "patternProperties": {
+                        "^[^*\"]*$": {
+                            "$ref": "sample.json"
+                        }
+                    },
+                    "properties": {
+                        "transaction": {
+                            "type": ["object", "null"],
+                            "properties": {
+                                "duration": {
+                                    "type": ["object", "null"],
+                                    "properties": {
+                                        "count": {
+                                            "type": ["number", "null"]
+                                        },
+                                        "sum": {
+                                            "type": ["object", "null"],
+                                            "properties": {
+                                                "us": {
+                                                    "type": ["number", "null"]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "breakdown": {
+                                    "type": ["object", "null"],
+                                    "properties": {
+                                        "count": {
+                                            "type": ["number", "null"]
+                                        }
+                                    }
+                                },
+                                "self_time": {
+                                    "type": ["object", "null"],
+                                    "properties": {
+                                        "count": {
+                                            "type": ["number", "null"]
+                                        },
+                                        "sum": {
+                                            "type": ["object", "null"],
+                                            "properties": {
+                                                "us": {
+                                                    "type": ["number", "null"]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "span": {
+                            "type": ["object", "null"],
+                            "self_time": {
+                                "type": ["object", "null"],
+                                "properties": {
+                                    "count": {
+                                        "type":  ["number", "null"]
+                                    },
+                                    "sum": {
+                                        "type": ["object", "null"],
+                                        "properties": {
+                                            "us": {
+                                                "type": ["number", "null"]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "tags": {
+                    "$ref": "../tags.json"
+                }
+            },
+            "required": ["samples"]
+        },
+        {"required": ["timestamp"], "properties": {"timestamp": { "type": "integer" }}}
+    ]
+}
